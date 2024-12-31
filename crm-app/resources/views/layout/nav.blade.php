@@ -9,8 +9,7 @@
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav me-auto">
               <li class="nav-item">
-                <a class="nav-link active" href="#">Home
-                  <span class="visually-hidden">(current)</span>
+                <a class="nav-link active" href="{{route('dashboard')}}">Dashboard
                 </a>
               </li>
               <li class="nav-item">
@@ -31,7 +30,7 @@
 
                 @auth
                     <li class="nav-item">
-                        <a class="nav-link" href="/profile">{{Auth::user()->name}}</a>
+                        <a class="nav-link" href="{{route('user.index',Auth::user()->id)}}">{{Auth::user()->name}}</a>
                     </li>
                     <li class="nav-item">
                         <form action="{{ route('logout') }}" method="POST">
@@ -40,7 +39,6 @@
                         </form>
                     </li>
                 @endauth
-
             </ul>
         </div>
     </div>

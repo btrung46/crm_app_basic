@@ -3,6 +3,7 @@
 use App\Http\Controllers\authController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,8 +19,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('home');
-});
-Route::get('/dashboard', [DashboardController::class ,'index'])->name('dashboard');
+})->name('home');
+Route::get('/dashboard', [DashboardController::class ,'index'])->name('dashboard')->middleware('auth');
 
 
 Route::group(['middleware'=> 'guest'], function () {
@@ -28,7 +29,13 @@ Route::group(['middleware'=> 'guest'], function () {
     Route::get('/register', [authController::class,'register'])->name('register');
     Route::post('/register', [authController::class,'store']);
 });
-Route::post('/logout', [authController::class,'logout'])->name('logout');
+Route::post('/logout', [authController::class,'logout'])->name('logout')->middleware('auth');
 
-Route::get('/create_client',[ClientController::class,'index'])->name('client.index');
-Route::post('/create_client',[ClientController::class,'create'])->name('client.create');
+Route::get('/create_client',[ClientController::class,'index'])->name('client.index')->middleware('auth');
+Route::post('/create_client',[ClientController::class,'create'])->name('client.create')->middleware('auth');
+Route::delete('/{client}',[ClientController::class,'delete'])->name('client.destroy')->middleware('auth');
+Route::get('/{client}/edit',[ClientController::class,'edit'])->name('client.edit')->middleware('auth');
+Route::post('/{client}',[ClientController::class,'update'])->name('client.update')->middleware('auth');
+
+
+Route::get('/profile/{user}',[ProfileController::class,'index'])->name('user.index')->middleware('auth');

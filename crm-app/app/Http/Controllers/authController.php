@@ -29,7 +29,7 @@ class authController extends Controller
         request()->session()->invalidate();
         request()->session()->regenerateToken();
 
-        return redirect()->route('dashboard')->with('success', 'logged out successfully');
+        return redirect()->route('home')->with('success', 'logged out successfully');
         
     }
     public function register()
